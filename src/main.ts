@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,14 +15,15 @@ async function bootstrap() {
     }),
   );
 
+  app.use(cookieParser.default())
 
   app.enableCors({
-    // origin: [
-    //   'http://localhost:5173', // untuk development
-    //   'http://127.0.0.1:5173', // untuk development IPv4
-    //   'http://[::1]:5173', // untuk development IPv6
-    //   'http://localhost:5174', // untuk testing API langsung
-    // ],
+    origin: [
+      'http://localhost:5173', // untuk development
+      'http://127.0.0.1:5173', // untuk development IPv4
+      'http://[::1]:5173', // untuk development IPv6
+      'http://localhost:5174', // untuk testing API langsung
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

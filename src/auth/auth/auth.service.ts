@@ -47,19 +47,23 @@ export class AuthService {
 
     async login(dto : LoginDto){
 
-        const user = await this.userRepo.findOne({where : { email : dto.email}});
+        const user = await this.userRepo.findOne({where : { email : dto.email},select: ['id','email','password']});
 
         if(!user)  {
             throw new UnauthorizedException('User not found');
         }
 
        
-       let passwordSame = await bcrypt.compare(dto.password, user.password);
-
+      let passwordSame = await bcrypt.compare(dto.password, user.password);
+       
         if(!passwordSame){
+
+
             throw new UnauthorizedException('Password not same');
         }
 
+
+        
 
         return this._createToken(user.id,user.email);
 

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/auth/guards/jwt-auth.guards';
@@ -18,10 +18,10 @@ export class UserController {
     }
 
 
-    @Get()
+    @Get('me')
     @ApiTags('User')
-    getUserByEmail(@Query('email') email : string){
-        return this.userService.findByEmail(email);
+    getUserByEmail(@Req() req : any ){
+        return this.userService.findByEmail(req.user.email);
     }
 
     @Get('/:id')

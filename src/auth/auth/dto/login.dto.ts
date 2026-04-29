@@ -4,6 +4,6 @@ export class LoginDto {
   @IsEmail({}, { message: 'Email tidak valid' })
   email: string;
 
-  @IsString()
+  @IsString({ message: 'Email tidak valid' })
   password: string;
 }

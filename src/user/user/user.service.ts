@@ -23,6 +23,7 @@ export class UserService {
     
      async findById(id: string) {
         
+      
        const user = await this.userRepo.findOne({ 
         where: { id },
         relations : ['posts'] 

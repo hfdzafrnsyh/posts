@@ -6,13 +6,13 @@ import { PostDto } from './dto/post.dto';
 import { PostService } from './post.service';
 
 @Controller('post')
-@UseGuards(JwtAuthGuard)
 export class PostController {
 
     constructor(
         private readonly postService : PostService
     ){}
     
+    @UseGuards(JwtAuthGuard)
     @Post('add')
     @ApiTags('Post')
     @ApiBody({type : PostDto})
@@ -21,6 +21,7 @@ export class PostController {
     }
 
 
+    
     @Get('all')
     @ApiTags('Post')
     getAllPost(){
@@ -35,6 +36,7 @@ export class PostController {
     }
 
 
+    @UseGuards(JwtAuthGuard)
     @Put('/:id/update')
     @ApiTags('Post')
     @ApiBody({type : PostDto})
@@ -43,6 +45,7 @@ export class PostController {
     }
 
 
+    @UseGuards(JwtAuthGuard)
     @Delete('/:id/delete')
     @ApiTags('Post')
     deletePost(@Param('id') id : string){
