@@ -21,8 +21,22 @@ export class AuthController {
     @Post('register')
     @ApiOperation({summary : 'User Register'})
     @ApiBody({type : RegisterDto})
-    register(@Body() dto : RegisterDto){
-        return this.authService.register(dto)
+    async register(@Body() dto : RegisterDto,
+    @Res({ passthrough: true }) res: Response){
+  
+        const register = await this.authService.register(dto)
+      
+        res.cookie('access_token', register.access_token, {
+          httpOnly: true,
+          secure: false,
+          sameSite: 'lax',
+          maxAge: 1000 * 60 * 60
+        })
+      
+        return {
+          message: 'Register success',
+          access_token : register.access_token
+        }
     }
 
     @Post('login')

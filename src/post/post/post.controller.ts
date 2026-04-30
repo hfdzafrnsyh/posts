@@ -12,12 +12,14 @@ export class PostController {
         private readonly postService : PostService
     ){}
     
+
     @UseGuards(JwtAuthGuard)
     @Post('add')
     @ApiTags('Post')
     @ApiBody({type : PostDto})
     addPost(@Req() req : any, @Body() dto : PostDto){
-        return this.postService.addPost(req.user.id,dto);   
+       return this.postService.addPost(req.user.id,dto);   
+   
     }
 
 
@@ -36,6 +38,7 @@ export class PostController {
     }
 
 
+
     @UseGuards(JwtAuthGuard)
     @Put('/:id/update')
     @ApiTags('Post')
@@ -43,6 +46,7 @@ export class PostController {
     updatePost(@Param('id') id : string, @Body() dto : PostDto){
         return this.postService.updatePost(id,dto);   
     }
+
 
 
     @UseGuards(JwtAuthGuard)
